@@ -77,7 +77,7 @@ df = pd.DataFrame([{
     "timestamp": r.timestamp,
 } for r in results])
 
-# ── Sidebar ──────────────────────────────────────────────
+
 with st.sidebar:
     st.markdown("###  LLM Eval")
     st.markdown("---")
@@ -99,7 +99,7 @@ filtered_df = df[
     df["benchmark"].isin(selected_benchmarks)
 ]
 
-# ── Header ────────────────────────────────────────────────
+
 st.markdown(f"""
 <div class="header-bar">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -117,7 +117,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Top Metrics ───────────────────────────────────────────
+
 m1, m2, m3, m4 = st.columns(4)
 best = filtered_df.loc[filtered_df["score"].idxmax()]
 worst = filtered_df.loc[filtered_df["score"].idxmin()]
@@ -129,7 +129,7 @@ m4.metric(" Versions", len(filtered_df["version"].unique()))
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ── Stat Badges ───────────────────────────────────────────
+
 st.markdown(f"""
 <div>
   <span class="stat-badge"> Best: <span>{best['benchmark']}</span> · <span>{best['score']}</span></span>
@@ -144,7 +144,7 @@ st.divider()
 COLORS = ["#38bdf8", "#4ade80", "#fbbf24", "#f472b6", "#a78bfa"]
 FILL_COLORS = ["rgba(56,189,248,0.15)", "rgba(74,222,128,0.15)", "rgba(251,191,36,0.15)"]
 
-# ── Charts Row ────────────────────────────────────────────
+
 c1, c2 = st.columns(2)
 
 with c1:
@@ -179,7 +179,7 @@ with c2:
     fig2.update_yaxes(gridcolor="#1e3a5f", color="#64748b")
     st.plotly_chart(fig2, use_container_width=True)
 
-# ── Score Drift ───────────────────────────────────────────
+
 st.markdown("####  Score Drift Over Time")
 st.caption("Regression tracking — see how each benchmark changes across versions")
 fig3 = px.line(filtered_df, x="timestamp", y="score", color="benchmark",
@@ -195,7 +195,7 @@ fig3.update_yaxes(gridcolor="#1e3a5f", color="#64748b", range=[0, 1])
 fig3.update_traces(line=dict(width=2.5), marker=dict(size=8))
 st.plotly_chart(fig3, use_container_width=True)
 
-# ── Radar Chart ───────────────────────────────────────────
+
 st.markdown("####  Benchmark Radar — Model Strengths")
 st.caption("Visual overview of model capability across all benchmarks")
 
@@ -227,7 +227,7 @@ st.plotly_chart(fig4, use_container_width=True)
 
 st.divider()
 
-# ── Raw Table ─────────────────────────────────────────────
+
 st.markdown("####  Full Eval Results Log")
 st.caption(f"{len(filtered_df)} records · sorted by latest first")
 
